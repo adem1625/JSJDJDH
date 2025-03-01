@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stage 7: The Final Meta Challenge</title>
+  <!-- Google Fonts for a classical, Arabian Nights feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Animated gradient background with violet and blue hues (same as previous stages) */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(45deg, #4B0082, #00008B, #8A2BE2, #1E90FF);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      color: #f5f5f5;
+      text-align: center;
+      min-height: 100vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    /* Container styling (consistent with previous stages) */
+    .container {
+      background: rgba(0, 0, 50, 0.85);
+      padding: 40px 50px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+      border: 2px solid #ffd700;
+      text-align: center;
+      margin: 40px auto;
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #ffd700;
+    }
+    
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .instructions {
+      text-align: left;
+      max-width: 500px;
+      margin: 20px auto;
+      font-size: 1.1em;
+    }
+    
+    form {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: 2px solid #b8860b;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      box-sizing: border-box;
+    }
+    
+    input[type="text"]:focus {
+      border-color: #ffd700;
+      outline: none;
+    }
+    
+    button {
+      padding: 12px 20px;
+      font-size: 1em;
+      background-color: #b8860b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      width: 100%;
+    }
+    
+    button:hover {
+      background-color: #d4af37;
+      transform: scale(1.05);
+    }
+    
+    #result {
+      margin-top: 20px;
+      font-size: 1.4em;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    .error {
+      background-color: rgba(255, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .success {
+      background-color: rgba(0, 128, 0, 0.6);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Stage 7: The Final Meta Challenge</h1>
+    <p>
+      Using the clues you gathered from previous stages, compute the final meta code and enter it below.
+    </p>
+    <p>
+      <em>(Hint: The final meta code is obtained by performing a specific calculation on your keys. Do not ask for partial clues!)</em>
+    </p>
+    <form id="metaForm">
+      <input type="text" id="metaCode" placeholder="Enter the final meta code">
+      <button type="submit">Submit Answer</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  
+  <script>
+    // Secret meta code (set behind the scenes; teams must derive it on their own)
+    const secretMetaCode = 185;
+    
+    document.getElementById("metaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const userMetaCode = parseInt(document.getElementById("metaCode").value.trim());
+      
+      const resultDiv = document.getElementById("result");
+      
+      if (isNaN(userMetaCode)) {
+        resultDiv.innerHTML = '<div class="error">Please enter a valid number.</div>';
+        return;
+      }
+      
+      if (userMetaCode === secretMetaCode) {
+        // Check if a winner has been declared (using localStorage; note: this is per browser)
+        if (!localStorage.getItem("winnerDeclared")) {
+          localStorage.setItem("winnerDeclared", "true");
+          resultDiv.innerHTML = '<div class="success">Correct! The final meta code <strong>' + secretMetaCode + '</strong> has been unlocked.<br><a href="https://example.com/nextstage" target="_blank">Click here to proceed to the final stage.</a></div>';
+        } else {
+          resultDiv.innerHTML = '<div class="error">Hard luck – a winner has already been declared!</div>';
+        }
+      } else {
+        resultDiv.innerHTML = '<div class="error">Incorrect meta code. Check your calculations and try again.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
