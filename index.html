@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Stage 7: The Final Meta Challenge</title>
-  <!-- Google Fonts for a classical, Arabian Nights feel -->
+  <title>Stage 7: Aladdin’s Final Battle – The Meta Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Animated gradient background with violet and blue hues (same as previous stages) */
+    /* Animated gradient background */
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    
     body {
       margin: 0;
       padding: 0;
@@ -23,121 +22,96 @@
       color: #f5f5f5;
       text-align: center;
       min-height: 100vh;
-      overflow-y: auto;
-      position: relative;
+      padding: 20px;
     }
-    
-    /* Container styling (consistent with previous stages) */
     .container {
       background: rgba(0, 0, 50, 0.85);
-      padding: 40px 50px;
+      padding: 40px 30px;
       border-radius: 10px;
-      max-width: 600px;
-      width: 90%;
+      max-width: 650px;
+      margin: 20px auto;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
       border: 2px solid #ffd700;
-      text-align: center;
-      margin: 40px auto;
-      animation: fadeInUp 1s ease-out forwards;
-      opacity: 0;
     }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      color: #ffd700;
-    }
-    
-    p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-    
+    h1 { color: #ffd700; }
+    p { font-size: 1.2em; }
     .instructions {
       text-align: left;
-      max-width: 500px;
-      margin: 20px auto;
+      max-width: 550px;
+      margin: 0 auto 20px;
       font-size: 1.1em;
     }
-    
     form {
       margin-top: 20px;
-      text-align: center;
     }
-    
     input[type="text"] {
-      width: 100%;
+      width: 80%;
       padding: 12px;
       font-size: 1em;
       border: 2px solid #b8860b;
       border-radius: 5px;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,0.95);
       color: #333;
-      box-sizing: border-box;
     }
-    
-    input[type="text"]:focus {
-      border-color: #ffd700;
-      outline: none;
-    }
-    
     button {
       padding: 12px 20px;
       font-size: 1em;
+      margin-top: 20px;
+      max-width: 250px;
+      width: 80%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
       background-color: #b8860b;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.3s;
-      width: 100%;
     }
-    
     button:hover {
       background-color: #d4af37;
       transform: scale(1.05);
     }
-    
-    #result {
-      margin-top: 20px;
-      font-size: 1.4em;
-      font-weight: bold;
+    /* Modal overlay for the popup result */
+    #modalResult {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease, visibility 0.5s;
+      z-index: 1000;
+    }
+    #modalResult.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .popup-content {
+      background-color: rgba(139, 0, 0, 0.9);
+      padding: 30px;
+      border-radius: 10px;
       text-align: center;
+      border: 2px solid #ffd700;
+      animation: popup 0.7s ease-out forwards;
     }
-    
-    .error {
-      background-color: rgba(255, 0, 0, 0.6);
-      padding: 10px;
-      border-radius: 5px;
+    @keyframes popup {
+      0% { transform: scale(0.5); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
-    
-    .success {
-      background-color: rgba(0, 128, 0, 0.6);
-      padding: 10px;
-      border-radius: 5px;
-    }
-    
-    a {
-      color: #ffd700;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    
-    a:hover {
-      text-decoration: underline;
+    /* Updated QR code size */
+    .qr-code {
+      margin-top: 20px;
+      max-width: 300px;
+      width: 80%;
     }
   </style>
 </head>
@@ -145,44 +119,45 @@
   <div class="container">
     <h1>Stage 7: The Final Meta Challenge</h1>
     <p>
-      Using the clues you gathered from previous stages, compute the final meta code and enter it below.
+      Only those who have mastered the previous stages can solve this final puzzle. Decode the mystery by synthesizing the keys.
     </p>
-    <p>
-      <em>(Hint: The final meta code is obtained by performing a specific calculation on your keys. Do not ask for partial clues!)</em>
-    </p>
+    <div class="instructions">
+      <p><strong>Method to obtain the final meta code:</strong></p>
+      <ul>
+        <li>Take the first digit of Key 1 (Stage 4).</li>
+        <li>Multiply it by Key 2 (Stage 6).</li>
+        <li>Add Key 3’s computed sum from the Royal Decree (Stage 5).</li>
+        <li>Subtract the number of unique letters in “Aladdin” from the total.</li>
+      </ul>
+      <p>Once you have your answer, enter it below.</p>
+    </div>
     <form id="metaForm">
       <input type="text" id="metaCode" placeholder="Enter the final meta code">
       <button type="submit">Submit Answer</button>
     </form>
-    <div id="result"></div>
   </div>
   
+  <!-- Modal Popup -->
+  <div id="modalResult"></div>
+  
   <script>
-    // Secret meta code (set behind the scenes; teams must derive it on their own)
-    const secretMetaCode = 185;
-    
+    const secretMetaCode = 185 - 5; 
     document.getElementById("metaForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      
       const userMetaCode = parseInt(document.getElementById("metaCode").value.trim());
-      
-      const resultDiv = document.getElementById("result");
-      
       if (isNaN(userMetaCode)) {
-        resultDiv.innerHTML = '<div class="error">Please enter a valid number.</div>';
+        alert("Please enter a valid number.");
         return;
       }
-      
       if (userMetaCode === secretMetaCode) {
-        // Check if a winner has been declared (using localStorage; note: this is per browser)
-        if (!localStorage.getItem("winnerDeclared")) {
-          localStorage.setItem("winnerDeclared", "true");
-          resultDiv.innerHTML = '<div class="success">Correct! The final meta code <strong>' + secretMetaCode + '</strong> has been unlocked.<br><a href="https://example.com/nextstage" target="_blank">Click here to proceed to the final stage.</a></div>';
-        } else {
-          resultDiv.innerHTML = '<div class="error">Hard luck – a winner has already been declared!</div>';
-        }
+        document.getElementById("modalResult").innerHTML = 
+          '<div class="popup-content">' +
+            '<div class="success">🎉 You are one step closer to winning! Be the first to scan the QR code and send your team name and the codes from stage 4,6,5 to claim victory! 🎉</div>' +
+            '<img class="qr-code" src="./nateg_issatso_qr.png" alt="Instagram QR Code">' +
+          '</div>';
+        document.getElementById("modalResult").classList.add("active");
       } else {
-        resultDiv.innerHTML = '<div class="error">Incorrect meta code. Check your calculations and try again.</div>';
+        alert("Incorrect meta code. Check your calculations and try again.");
       }
     });
   </script>
