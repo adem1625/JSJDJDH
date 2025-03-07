@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Stage 7: Aladdin’s Final Battle – The Meta Challenge</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sorcerer’s Trick </title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Animated gradient background */
+    /*6*/
+    /* Consistent gradient animation */
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     body {
       margin: 0;
       padding: 0;
@@ -20,160 +21,191 @@
       background-size: 400% 400%;
       animation: gradientAnimation 15s ease infinite;
       color: #f5f5f5;
-      text-align: center;
       min-height: 100vh;
-      padding: 20px;
+      overflow-y: auto;
     }
+
+    /* Container styling */
     .container {
       background: rgba(0, 0, 50, 0.85);
-      padding: 40px 30px;
+      padding: 40px 50px;
       border-radius: 10px;
-      max-width: 650px;
-      margin: 20px auto;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      max-width: 600px;
+      width: 90%;
       border: 2px solid #ffd700;
+      margin: 40px auto;
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
     }
-    h1 { color: #ffd700; }
-    p { font-size: 1.2em; }
-    .instructions {
-      text-align: left;
-      max-width: 550px;
-      margin: 0 auto 20px;
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Video container styling */
+    .video-container {
+      position: relative;
+      margin: 20px 0;
+      border: 2px solid #ffd700;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Form elements */
+    .timestamp-input {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .timestamp-input input {
+      width: 100px;
+      padding: 10px;
       font-size: 1.1em;
-    }
-    form {
-      margin-top: 20px;
-    }
-    input[type="text"] {
-      width: 80%;
-      padding: 12px;
-      font-size: 1em;
-      border: 2px solid #b8860b;
+      border: 2px solid #ffd700;
       border-radius: 5px;
-      margin-bottom: 20px;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.9);
       color: #333;
+      text-align: center;
     }
+
     button {
-      padding: 12px 20px;
-      font-size: 1em;
-      margin-top: 20px;
-      max-width: 250px;
-      width: 80%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: #b8860b;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: #9370DB;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
-    }
-    button:hover {
-      background-color: #d4af37;
-      transform: scale(1.05);
-    }
-    /* Error message styling to ensure it appears inside the container */
-    .error-message {
-      color: #ffcccc;
-      font-size: 1em;
-      margin-top: 10px;
-      text-align: center;
-      display: block;
-      position: relative;
-    }
-    /* Modal overlay for the popup result */
-    #modalResult {
-      position: fixed;
-      top: 0;
-      left: 0;
+      transition: all 0.3s ease;
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.5s ease, visibility 0.5s;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background-color: #8A2BE2;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+    }
+
+    /* Genie animation - Centered version */
+    #genieReveal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 1000;
-    }
-    #modalResult.active {
-      visibility: visible;
-      opacity: 1;
-    }
-    .popup-content {
-      background-color: rgba(139, 0, 0, 0.9);
-      padding: 30px;
-      border-radius: 10px;
       text-align: center;
-      border: 2px solid #ffd700;
-      animation: popup 0.7s ease-out forwards;
+      animation: genieFadeIn 1s ease-out forwards;
     }
-    @keyframes popup {
-      0% { transform: scale(0.5); opacity: 0; }
-      80% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+
+    @keyframes genieFadeIn {
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -40%); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, -50%); 
+      }
     }
-    /* Updated QR code size */
-    .qr-code {
+
+    #genieMessage {
       margin-top: 20px;
-      max-width: 300px;
-      width: 80%;
+      font-size: 1.4em;
+      background: rgba(0, 0, 50, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 20px rgba(255,215,0,0.5);
+    }
+
+    /* Consistent result messages */
+    .success {
+      color: #90EE90;
+      background: rgba(0, 255, 0, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #90EE90;
+    }
+
+    .error {
+      color: #ff4d4d;
+      background: rgba(255, 0, 0, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ff4d4d;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Stage 7: The Final Meta Challenge</h1>
-    <p>
-      Only those who have mastered the previous stages can solve this final puzzle. Decode the mystery by synthesizing the keys.
-    </p>
-    <div class="instructions">
-      <p><strong>Method to obtain the final meta code:</strong></p>
-      <ul>
-        <li>Take the first digit of Key 1 (Stage 4).</li>
-        <li>Multiply it by Key 2 (Stage 6).</li>
-        <li>Add Key 3’s computed sum from the Royal Decree (Stage 5).</li>
-        <li>Subtract the number of unique letters in “Aladdin” from the total.</li>
-      </ul>
-      <p>Once you have your answer, enter it below.</p>
+    <h1>Stage 2: The Sorcerer’s Trick</h1>
+    <p>Watch the magical vision below and find the exact moment when the word "wishes" is spoken:</p>
+
+    <div class="video-container">
+      <video controls>
+        <source src="./Aladdin meets Genie HD.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
-    <form id="metaForm">
-      <input type="text" id="metaCode" placeholder="Enter the final meta code">
-      <button type="submit">Submit Answer</button>
+
+    <form id="answerForm">
+      <div class="timestamp-input">
+        <div>
+          <label>Minutes:</label>
+          <input type="number" id="minutes" min="0" max="10" required>
+        </div>
+        <div>
+          <label>Seconds:</label>
+          <input type="number" id="seconds" min="0" max="59" required>
+        </div>
+      </div>
+      
+      <button type="submit">Reveal the Truth</button>
     </form>
-    <div id="errorMessage" class="error-message"></div>
+
+    <div id="responseMessage"></div>
   </div>
-  
-  <!-- Modal Popup -->
-  <div id="modalResult"></div>
-  
+
+  <!-- Genie Animation - Centered -->
+  <div id="genieReveal">
+    <img src="./gen.png" alt="Magic Genie" style="width: 300px;">
+    <div id="genieMessage">
+      <p>⏳ By the sands of time! You found it! ⏳</p>
+      <p>The word whispers at <strong>both 2:08 and 2:11</strong></p>
+      <a href="https://qrco.de/bfnEaA" target="_blank" style="color: #ffd700; text-decoration: none; font-weight: bold;">
+        Enter the Cave of Wonders →
+      </a>
+    </div>
+  </div>
+
   <script>
-    const secretMetaCode = 185 - 5;
-    
-    document.getElementById("metaForm").addEventListener("submit", function(e) {
+    document.getElementById("answerForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      // Clear any previous error message
-      document.getElementById("errorMessage").innerHTML = "";
-      
-      const userMetaCode = parseInt(document.getElementById("metaCode").value.trim());
-      
-      if (isNaN(userMetaCode)) {
-        document.getElementById("errorMessage").innerHTML = "Please enter your final meta code.";
-        return;
-      }
-      
-      if (userMetaCode === secretMetaCode) {
-        document.getElementById("modalResult").innerHTML = 
-          '<div class="popup-content">' +
-            '<div class="success">🎉 You are one step closer to winning! Be the first to scan the QR code and send the secret word to claim victory! 🎉</div>' +
-            '<img class="qr-code" src="./nateg_issatso_qr.png" alt="Instagram QR Code">' +
-          '</div>';
-        document.getElementById("modalResult").classList.add("active");
+      const minutes = parseInt(document.getElementById("minutes").value) || 0;
+      const seconds = parseInt(document.getElementById("seconds").value) || 0;
+      const totalSeconds = (minutes * 60) + seconds;
+      const genieDiv = document.getElementById("genieReveal");
+
+      // Accept both 2:08 (128s) and 2:11 (131s)
+      if (totalSeconds === 128 || totalSeconds === 131) {
+        genieDiv.style.display = "block";
+        document.getElementById("responseMessage").innerHTML = '';
       } else {
-        document.getElementById("errorMessage").innerHTML = "Oops, that doesn't look right. Try checking your calculations again.";
+        genieDiv.style.display = "none";
+        document.getElementById("responseMessage").innerHTML = 
+          '<div class="error">The vision remains unclear... Seek again!</div>';
       }
     });
   </script>
