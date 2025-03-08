@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>The Sorcerer’s Trick </title>
+  <title>The Sorcerer’s Trick</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /*6*/
-    /* Consistent gradient animation */
+    /* All previous CSS styles remain unchanged */
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -25,7 +24,6 @@
       overflow-y: auto;
     }
 
-    /* Container styling */
     .container {
       background: rgba(0, 0, 50, 0.85);
       padding: 40px 50px;
@@ -44,7 +42,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Video container styling */
+    h1 {
+      text-align: center;
+      color: #ffd700;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
     .video-container {
       position: relative;
       margin: 20px 0;
@@ -59,23 +64,22 @@
       height: auto;
     }
 
-    /* Form elements */
-    .timestamp-input {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin: 20px 0;
+    .answer-input {
+      margin: 25px 0;
+      text-align: center;
     }
 
-    .timestamp-input input {
-      width: 100px;
-      padding: 10px;
-      font-size: 1.1em;
+    .answer-input input {
+      width: 200px;
+      padding: 12px;
+      font-size: 1.2em;
       border: 2px solid #ffd700;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
       text-align: center;
+      margin: 0 auto 20px;
+      display: block;
     }
 
     button {
@@ -97,7 +101,6 @@
       box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
     }
 
-    /* Genie animation - Centered version */
     #genieReveal {
       display: none;
       position: fixed;
@@ -130,7 +133,6 @@
       box-shadow: 0 0 20px rgba(255,215,0,0.5);
     }
 
-    /* Consistent result messages */
     .success {
       color: #90EE90;
       background: rgba(0, 255, 0, 0.15);
@@ -151,7 +153,7 @@
 <body>
   <div class="container">
     <h1> The Sorcerer’s Trick</h1>
-    <p>Watch the magical vision below and find the exact moment when the word "wishes" is spoken:</p>
+    <p>Find the three wishes</p>
 
     <div class="video-container">
       <video controls>
@@ -161,15 +163,8 @@
     </div>
 
     <form id="answerForm">
-      <div class="timestamp-input">
-        <div>
-          <label>Minutes:</label>
-          <input type="number" id="minutes" min="0" max="10" required>
-        </div>
-        <div>
-          <label>Seconds:</label>
-          <input type="number" id="seconds" min="0" max="59" required>
-        </div>
+      <div class="answer-input">
+        <input type="text" id="timeInput" placeholder="" required>
       </div>
       
       <button type="submit">Reveal the Truth</button>
@@ -178,12 +173,11 @@
     <div id="responseMessage"></div>
   </div>
 
-  <!-- Genie Animation - Centered -->
   <div id="genieReveal">
     <img src="./gen.png" alt="Magic Genie" style="width: 300px;">
     <div id="genieMessage">
       <p>⏳ By the sands of time! You found it! ⏳</p>
-      <p>The word whispers at <strong>both 2:08 and 2:11</strong></p>
+      <p>The secret reveals itself at <strong>2:08</strong></p>
       <a href="https://qrco.de/bfnEaA" target="_blank" style="color: #ffd700; text-decoration: none; font-weight: bold;">
         Enter the Cave of Wonders →
       </a>
@@ -193,19 +187,32 @@
   <script>
     document.getElementById("answerForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const minutes = parseInt(document.getElementById("minutes").value) || 0;
-      const seconds = parseInt(document.getElementById("seconds").value) || 0;
-      const totalSeconds = (minutes * 60) + seconds;
+      const timeInput = document.getElementById("timeInput").value.trim();
       const genieDiv = document.getElementById("genieReveal");
+      let totalSeconds = null;
 
-      // Accept both 2:08 (128s) and 2:11 (131s)
-      if (totalSeconds === 128 || totalSeconds === 131) {
+      // Validate time format
+      const timeFormat = /^(?:(\d{1,2}):(\d{2})|(\d+))$/.exec(timeInput);
+      
+      if (timeFormat) {
+        if (timeFormat[1] && timeFormat[2]) { // MM:SS format
+          const minutes = parseInt(timeFormat[1]);
+          const seconds = parseInt(timeFormat[2]);
+          if (seconds < 60) {
+            totalSeconds = minutes * 60 + seconds;
+          }
+        } else if (timeFormat[3]) { // Total seconds
+          totalSeconds = parseInt(timeFormat[3]);
+        }
+      }
+
+      if (totalSeconds === 128) {
         genieDiv.style.display = "block";
         document.getElementById("responseMessage").innerHTML = '';
       } else {
         genieDiv.style.display = "none";
         document.getElementById("responseMessage").innerHTML = 
-          '<div class="error">The vision remains unclear... Seek again!</div>';
+          '<div class="error">Invalid temporal signature! Use MM:SS format or total seconds</div>';
       }
     });
   </script>
